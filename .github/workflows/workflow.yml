@@ -29,3 +29,21 @@ jobs:
 
     - name: Run unit tests
       run: ./calc/mvnw -f ./calc/pom.xml test
+    
+    - name: Tag the build
+      id: tag
+      run: |
+        TIMESTAMP=$(date +%Y%m%d%H%M%S)
+        TAG_NAME="build-${TIMESTAMP}"
+        echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
+
+        - name: Package the System
+        run: |
+          version=$(echo ${GITHUB_REF##*/})
+          zip -r ${version}.zip back-end/target/
+  
+    - name: Upload the package
+      uses: actions/upload-artifact@v2
+        with:
+          name: rc-package
+          path: ${{ github.workspace }}/rc-*.zip
