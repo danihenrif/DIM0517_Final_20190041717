@@ -14,9 +14,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up JDK 21
+      - name: Set up JDK 21
       uses: actions/setup-java@v3
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+
+    - name: Resolve dependencies
+      run: ./calc/mvnw -f calc/pom.xml dependency:resolve 
+
+    - name: Build with Maven
+      run: ./calc/mvnw -f calc/pom.xml clean install
+
+    - name: Run unit tests
+      run: ./calc/mvnw -f calc/pom.xml test
