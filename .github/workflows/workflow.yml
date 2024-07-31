@@ -22,7 +22,7 @@ jobs:
         cache: maven
 
     - name: Resolve dependencies
-      run: ./calc/mvnw -f ./calc/pom.xml dependency:resolve 
+      run: ./calc/mvnw -f calc/pom.xml dependency:resolve 
 
     - name: Build with Maven
       run: ./calc/mvnw -f ./calc/pom.xml clean install
